@@ -3,7 +3,7 @@
 int main()
 {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Raceing" };
-    window.setFramerateLimit(144);
+    //nie dajemy limitu FPS
 
     auto kwadrat = sf::RectangleShape({100, 100});
 
