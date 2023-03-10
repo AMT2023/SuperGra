@@ -1,1 +1,1 @@
-XD
+Jaki kompilator wybrać?
