@@ -3,7 +3,7 @@
 int main()
 {
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passarati Racing" };
-    window.setFramerateLimit(144);
+    window.setFramerateLimit(165);
 
     auto kwadrat = sf::RectangleShape({100, 100});
 
