@@ -27,7 +27,7 @@ class Player
 {
     public:
     sf::RectangleShape rect;
-    float angle;
+    float angle = 0;
     float speed;
 
     Player(sf::Vector2f position)
@@ -40,8 +40,8 @@ class Player
     void move()
     {
         rect.move({
-            speed * sin(M_PI / 180 * angle),
-            -speed * cos(M_PI / 180 * angle)
+            speed * static_cast<float>(sin(M_PI / 180 * angle)),
+            -speed * static_cast<float>(cos(M_PI / 180 * angle))
         });
     }
 
