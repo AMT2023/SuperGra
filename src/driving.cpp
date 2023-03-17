@@ -3,7 +3,7 @@
 
 void driving(float &angle, float &speed, sf::RectangleShape &rect)
 {
-    speed /= 4;
+    speed *= 0.9;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         angle -= 1;
@@ -14,11 +14,11 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        speed += 2;
+        speed += 0.5;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        speed -= 2;
+        speed -= 0.5;
     }
     rect.setRotation(angle);
 }
@@ -45,14 +45,9 @@ class Player
         });
     }
 
-    void blit(sf::RenderWindow &window)
-    {
-        window.draw(rect);
-    }
-
     void update(sf::RenderWindow &window)
     {
         move();
-        blit(window);
+        window.draw(rect);
     }
 };
