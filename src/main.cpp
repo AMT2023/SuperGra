@@ -7,7 +7,7 @@ int main()
     auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Raceing" };
     window.setFramerateLimit(144);
 
-    Player player({100, 110});
+    Player player({window.getSize().x / 2.f, window.getSize().y / 2.f});
 
     while (window.isOpen())
     {

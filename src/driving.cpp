@@ -6,11 +6,11 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
     speed /= 4;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        angle -= 2;
+        angle -= 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        angle += 2;
+        angle += 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
