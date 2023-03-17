@@ -1,4 +1,4 @@
 #include <SFML/Graphics.hpp>
-int driving(auto window ){
+int driving(auto & window ){
     
 }
