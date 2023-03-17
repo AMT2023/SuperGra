@@ -11,3 +11,8 @@ Gameplay:
 -Tuning:
 -zapis postępu
 -szyfrowanie zapisu
+
+
+
+
+-osobne pliki
