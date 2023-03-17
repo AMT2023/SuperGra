@@ -9,7 +9,7 @@ int main()
 
     while (window.isOpen())
     {
-        for (auto event = sf::Event{}; window.pollEvent(event);)
+        for (auto event = sf::Event{}; window.pollEvgent(event);)
         {
             if (event.type == sf::Event::Closed)
             {
