@@ -9,3 +9,4 @@ Gameplay:
 
 
 -Tuning:
+-szyfrowanie zapisu
