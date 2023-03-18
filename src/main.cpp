@@ -24,6 +24,8 @@ int main()
         driving(player.angle, player.speed, player.rect);
         player.update(window);
 
+        ps::update(window);
+
         window.display();
     }
 }
