@@ -3,22 +3,21 @@
 
 void driving(float &angle, float &speed, sf::RectangleShape &rect)
 {
-    speed *= 0.9;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        angle -= 1;
+        angle -= 1.4;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        angle += 1;
+        angle += 1.4;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
-        speed += 0.5;
+        speed += 0.15;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        speed -= 0.5;
+        speed -= 0.06;
     }
     rect.setRotation(angle);
 }
@@ -39,6 +38,7 @@ class Player
 
     void move()
     {
+        speed *= 0.98;
         rect.move({
             speed * static_cast<float>(sin(M_PI / 180 * angle)),
             -speed * static_cast<float>(cos(M_PI / 180 * angle))
