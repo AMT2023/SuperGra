@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include <iostream>
 #include "particles.cpp"
 
 void driving(float &angle, float &speed, sf::RectangleShape &rect)
@@ -32,7 +31,7 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
     {
         speed -= 0.08;
     }
-    
+
     rect.setRotation(angle);
 }
 
