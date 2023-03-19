@@ -64,6 +64,9 @@ class Player
     void update(sf::RenderWindow &window)
     {
         move();
+        // auto view = sf::View(rect.getPosition(), { 1920u, 1080u });
+        // view.setRotation(angle);
+        // window.setView(view);
         window.draw(rect);
     }
 };
