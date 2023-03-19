@@ -10,8 +10,8 @@ namespace ps
 
     enum Effects
     {
-        shrink,
-        fade
+        shrink = 1 << 0,
+        fade = 1 << 1
     };
 
     class Particle
@@ -29,12 +29,12 @@ namespace ps
         
         sf::Clock clock;
         float scaleFactor = 1;
-        float fadeOpacity = 1;
+        float fadeOpacity = 255;
         bool destroy = false;
 
         public:
 
-        Particle(Types type, Effects effect, sf::Vector2f position, float size, sf::Vector2f velocity, float rotation, sf::Color color, float time)
+        Particle(int type, int effect, sf::Vector2f position, float size, sf::Vector2f velocity, float rotation, sf::Color color, float time)
         {
             this->type = type;
             this->effect = effect;
@@ -81,26 +81,24 @@ namespace ps
             return destroy;
         }
 
-        void update(sf::RenderWindow &window)
+        void updateEffects()
         {
-            switch (effect)
+            if ((1 & (effect >> 0)))
             {
-                case Effects::shrink:
-
-                    scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
-                    setDestroy();
-
-                    break;
-
-                case Effects::fade:
-
-                    fadeOpacity = 255 * (1 - clock.getElapsedTime().asSeconds() / time);
-                    if (fadeOpacity < 0) { fadeOpacity = 0; }
-                    setDestroy();
-
-                    break;
+                scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
+                setDestroy();
             }
 
+            if ((1 & (effect >> 1)))
+            {
+                fadeOpacity = 255 * (1 - clock.getElapsedTime().asSeconds() / time);
+                if (fadeOpacity < 0) { fadeOpacity = 0; }
+                setDestroy();
+            }
+        }
+
+        void updateParticle(sf::RenderWindow &window)
+        {
             switch (type)
             {
                 case Types::squareParticle:
@@ -125,6 +123,12 @@ namespace ps
                     window.draw(circle);
                     break;
             }
+        }
+
+        void update(sf::RenderWindow &window)
+        {
+            updateEffects();
+            updateParticle(window);
         }
     };
 
