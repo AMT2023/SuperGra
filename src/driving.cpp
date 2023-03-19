@@ -23,7 +23,7 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
                 ps::Effects::fade,
                 rect.getPosition(),
                 10,
-                {-0.5f * (float)(sin(M_PI / 180 * ((rand() % 81) + angle - 40))),
+                {0.5f * (float)(-sin(M_PI / 180 * ((rand() % 81) + angle - 40))),
                  0.5f * (float)(cos(M_PI / 180 * ((rand() % 81) + angle - 40)))},
                 (rand() % 360),
                 sf::Color(92, 34, 1),
@@ -56,8 +56,8 @@ class Player
     {
         speed *= 0.98;
         rect.move({
-            speed * static_cast<float>(sin(M_PI / 180 * angle)),
-            -speed * static_cast<float>(cos(M_PI / 180 * angle))
+            speed * (float)(sin(M_PI / 180 * angle)),
+            speed * (float)(-cos(M_PI / 180 * angle))
         });
     }
 
