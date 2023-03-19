@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <random>
 #include "particles.cpp"
 
 void driving(float &angle, float &speed, sf::RectangleShape &rect)
@@ -18,12 +19,14 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
 
         ps::particles.push_back(
             ps::Particle(
-                ps::Types::circleParticle,
+                ps::Types::squareParticle,
+                ps::Effects::fade,
                 rect.getPosition(),
-                5,
-                {-0.5f * static_cast<float>(sin(M_PI / 180 * angle)),
-                0.5f * static_cast<float>(cos(M_PI / 180 * angle))},
-                sf::Color(92, 34, 1),
+                10,
+                {-0.5f * static_cast<float>(sin(M_PI / 180 * ((rand() % 41) - angle - 20))),
+                0.5f * static_cast<float>(cos(M_PI / 180 * ((rand() % 41) - angle - 20)))},
+                ((rand() % 41) - angle - 20),
+                sf::Color(92, 34, 1, 127),
                 0.4
             ));
     }

@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace ps
 {
@@ -8,27 +9,40 @@ namespace ps
         circleParticle
     };
 
+    enum Effects
+    {
+        shrink,
+        fade
+    };
+
     class Particle
     {
         private:
 
         int type;
+        int effect;
         sf::RectangleShape rect;
         sf::CircleShape circle;
         sf::Vector2f velocity;
-        sf::Clock clock;
+        float rotation;
+        sf::Color color;
         float time;
         
+        sf::Clock clock;
         float scaleFactor = 1;
+        float fadeOpacity = 1;
         bool destroy = false;
 
         public:
 
-        Particle(Types type, sf::Vector2f position, float size, sf::Vector2f velocity, sf::Color color, float time)
+        Particle(Types type, Effects effect, sf::Vector2f position, float size, sf::Vector2f velocity, float rotation, sf::Color color, float time)
         {
             this->type = type;
-            this->time = time;
+            this->effect = effect;
             this->velocity = velocity;
+            this->rotation = rotation;
+            this->color = color;
+            this->time = time;
 
             switch (type)
             {
@@ -37,6 +51,7 @@ namespace ps
                     rect.setSize({size, size});
                     rect.setOrigin({size / 2, size / 2});
                     rect.setPosition(position);
+                    rect.setRotation(rotation);
                     rect.setFillColor(color);
                     break;
 
@@ -56,6 +71,10 @@ namespace ps
             {
                 destroy = true;
             }
+            if (fadeOpacity <= 0)
+            {
+                destroy = true;
+            }
         }
 
         bool getDestroy()
@@ -65,14 +84,32 @@ namespace ps
 
         void update(sf::RenderWindow &window)
         {
+            switch (effect)
+            {
+                case Effects::shrink:
+
+                    scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
+                    setDestroy();
+
+                    break;
+
+                case Effects::fade:
+
+                    fadeOpacity = 255 * (1 - clock.getElapsedTime().asSeconds() / time);
+                    if (fadeOpacity < 0) { fadeOpacity = 0; }
+                    setDestroy();
+
+                    break;
+            }
+
             switch (type)
             {
                 case Types::squareParticle:
                 
                     rect.move(velocity.x, velocity.y);
 
-                    scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
                     rect.setScale(scaleFactor, scaleFactor);
+                    rect.setFillColor(sf::Color(color.r, color.g, color.b, fadeOpacity));
                     setDestroy();
 
                     window.draw(rect);
@@ -82,8 +119,8 @@ namespace ps
 
                     circle.move(velocity.x, velocity.y);
 
-                    scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
                     circle.setScale(scaleFactor, scaleFactor);
+                    circle.setFillColor(sf::Color(color.r, color.g, color.b, fadeOpacity));
                     setDestroy();
 
                     window.draw(circle);
