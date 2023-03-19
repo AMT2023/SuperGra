@@ -21,10 +21,10 @@ int main()
 
         window.clear();
 
+        // ps::update(window);
+
         driving(player.angle, player.speed, player.rect);
         player.update(window);
-
-        ps::update(window);
 
         window.display();
     }
