@@ -4,7 +4,7 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Raceing" };
+    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Raceing", sf::Style::Fullscreen };
     window.setFramerateLimit(144);
 
     Player player({window.getSize().x / 2.f, window.getSize().y / 2.f});
@@ -13,7 +13,7 @@ int main()
     {
         for (auto event = sf::Event{}; window.pollEvent(event);)
         {
-            if (event.type == sf::Event::Closed)
+            if ((event.type == sf::Event::Closed) or (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
             {
                 window.close();
             }
