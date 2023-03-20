@@ -7,11 +7,11 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
-        angle -= 1.4;
+        angle -= 1.1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        angle += 1.4;
+        angle += 1.1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
@@ -32,7 +32,7 @@ void driving(float &angle, float &speed, sf::RectangleShape &rect)
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        speed -= 0.08;
+        speed -= 0.075;
     }
 
     rect.setRotation(angle);
