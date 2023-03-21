@@ -1,108 +1,138 @@
 #include <SFML/Graphics.hpp>
-#include "particles.h"
 
 namespace ps
 {
-    enum Types;
-
-    enum Effects;
-
-    Particle::Particle(int type, int effect, sf::Vector2f position, float size, sf::Vector2f velocity, float rotation, sf::Color color, float time)
+    enum Types
     {
-        this->type = type;
-        this->effect = effect;
-        this->velocity = velocity;
-        this->rotation = rotation;
-        this->color = color;
-        this->time = time;
+        squareParticle,
+        circleParticle
+    };
 
-        switch (type)
-        {
-            case Types::squareParticle:
-
-                rect.setSize({size, size});
-                rect.setOrigin({size / 2, size / 2});
-                rect.setPosition(position);
-                rect.setRotation(rotation);
-                rect.setFillColor(color);
-                break;
-
-            case Types::circleParticle:
-
-                circle.setRadius(size);
-                circle.setOrigin({size, size});
-                circle.setPosition(position);
-                circle.setFillColor(color);
-                break;
-        }
-    }
-
-    void Particle::setDestroy()
+    enum Effects
     {
-        if (scaleFactor <= 0)
-        {
-            destroy = true;
-        }
-        if (fadeOpacity <= 0)
-        {
-            destroy = true;
-        }
-    }
+        shrink = 1 << 0,
+        fade = 1 << 1
+    };
 
-    bool Particle::getDestroy()
+    class Particle
     {
-        return destroy;
-    }
+        private:
 
-    void Particle::updateEffects()
-    {
-        if ((1 & (effect >> 0)))
+        int type;
+        int effect;
+        sf::RectangleShape rect;
+        sf::CircleShape circle;
+        sf::Vector2f velocity;
+        float rotation;
+        sf::Color color;
+        float time;
+        
+        sf::Clock clock;
+        float scaleFactor = 1;
+        float fadeOpacity = 255;
+        bool destroy = false;
+
+        public:
+
+        Particle(int type, int effect, sf::Vector2f position, float size, sf::Vector2f velocity, float rotation, sf::Color color, float time)
         {
-            scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
-            setDestroy();
+            this->type = type;
+            this->effect = effect;
+            this->velocity = velocity;
+            this->rotation = rotation;
+            this->color = color;
+            this->time = time;
+
+            switch (type)
+            {
+                case Types::squareParticle:
+
+                    rect.setSize({size, size});
+                    rect.setOrigin({size / 2, size / 2});
+                    rect.setPosition(position);
+                    rect.setRotation(rotation);
+                    rect.setFillColor(color);
+                    break;
+
+                case Types::circleParticle:
+
+                    circle.setRadius(size);
+                    circle.setOrigin({size, size});
+                    circle.setPosition(position);
+                    circle.setFillColor(color);
+                    break;
+            }
         }
 
-        if ((1 & (effect >> 1)))
+        void setDestroy()
         {
-            fadeOpacity = 255 * (1 - clock.getElapsedTime().asSeconds() / time);
-            if (fadeOpacity < 0) { fadeOpacity = 0; }
-            setDestroy();
+            if (scaleFactor <= 0)
+            {
+                destroy = true;
+            }
+            if (fadeOpacity <= 0)
+            {
+                destroy = true;
+            }
         }
-    }
 
-    void Particle::updateParticle(sf::RenderWindow &window)
-    {
-        switch (type)
+        bool getDestroy()
         {
-            case Types::squareParticle:
-            
-                rect.move(velocity.x, velocity.y);
+            return destroy;
+        }
 
-                rect.setScale(scaleFactor, scaleFactor);
-                rect.setFillColor(sf::Color(color.r, color.g, color.b, fadeOpacity));
+        void updateEffects()
+        {
+            if ((1 & (effect >> 0)))
+            {
+                scaleFactor = 1 - clock.getElapsedTime().asSeconds() / time;
                 setDestroy();
+            }
 
-                window.draw(rect);
-                break;
-
-            case Types::circleParticle:
-
-                circle.move(velocity.x, velocity.y);
-
-                circle.setScale(scaleFactor, scaleFactor);
-                circle.setFillColor(sf::Color(color.r, color.g, color.b, fadeOpacity));
+            if ((1 & (effect >> 1)))
+            {
+                fadeOpacity = 255 * (1 - clock.getElapsedTime().asSeconds() / time);
+                if (fadeOpacity < 0) { fadeOpacity = 0; }
                 setDestroy();
-
-                window.draw(circle);
-                break;
+            }
         }
-    }
 
-    void Particle::update(sf::RenderWindow &window)
-    {
-        updateEffects();
-        updateParticle(window);
-    }
+        void updateParticle(sf::RenderWindow &window)
+        {
+            switch (type)
+            {
+                case Types::squareParticle:
+                
+                    rect.move(velocity.x, velocity.y);
+
+                    rect.setScale(scaleFactor, scaleFactor);
+                    rect.setFillColor(sf::Color(color.r, color.g, color.b, fadeOpacity));
+                    setDestroy();
+
+                    window.draw(rect);
+                    break;
+
+                case Types::circleParticle:
+
+                    circle.move(velocity.x, velocity.y);
+
+                    circle.setScale(scaleFactor, scaleFactor);
+                    circle.setFillColor(sf::Color(color.r, color.g, color.b, fadeOpacity));
+                    setDestroy();
+
+                    window.draw(circle);
+                    break;
+            }
+        }
+
+        void update(sf::RenderWindow &window)
+        {
+            updateEffects();
+            updateParticle(window);
+        }
+    };
+
+    std::vector<Particle> particles;
 
     void update(sf::RenderWindow &window)
     {

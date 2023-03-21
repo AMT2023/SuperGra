@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+#pragma once
+
 #ifndef _PARTICLES_H
 #define _PARTICLES_H
 
