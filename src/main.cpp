@@ -4,7 +4,7 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Raceing", sf::Style::Fullscreen };
+    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Raceing", sf::Style::Default};
     window.setFramerateLimit(144);
 
     Player player({window.getSize().x / 2.f, window.getSize().y / 2.f});
@@ -21,7 +21,7 @@ int main()
 
         window.clear();
 
-        // ps::update(window);
+        ps::update(window);
 
         driving(player.angle, player.speed, player.rect);
         player.update(window);
