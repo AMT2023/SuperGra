@@ -1,7 +1,8 @@
 #ifndef _PLAYER_
-
 #define _PLAYER_
+
 #include<SFML/Graphics.hpp>
+
 class Player
 {
     public:
@@ -10,7 +11,8 @@ class Player
     float angle = 0;
     float speed;
 
-    float PRZYSPIESZENIE = 0.15;
+    float przyspieszenie = 0.15;
+    float opor = 0.98;
 
     Player(sf::Vector2f position)
     {
@@ -24,7 +26,7 @@ class Player
 
     void move()
     {
-        speed *= 0.98;
+        speed *= opor;
         rect.move({
             speed * (float)(sin(M_PI / 180 * angle)),
             speed * (float)(-cos(M_PI / 180 * angle))
@@ -40,4 +42,5 @@ class Player
         window.draw(rect);
     }
 };
+
 #endif
