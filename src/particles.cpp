@@ -91,7 +91,7 @@ namespace ps
 
             if ((1 & (effect >> 1)))
             {
-                fadeOpacity = 255 * (1 - clock.getElapsedTime().asSeconds() / time);
+                fadeOpacity = color.a * (1 - clock.getElapsedTime().asSeconds() / time);
                 if (fadeOpacity < 0) { fadeOpacity = 0; }
                 setDestroy();
             }

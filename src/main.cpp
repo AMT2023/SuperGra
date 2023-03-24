@@ -23,7 +23,7 @@ int main()
 
         window.clear();
 
-        //ps::update(window);
+        ps::update(window);
 
         driving(player);
         player.update(window);
