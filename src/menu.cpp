@@ -2,5 +2,15 @@
 #include <cmath>
 #include <random>
 
-int menu;
-if
+int menu(){
+
+    int menu;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+    {
+        menu = 1
+        
+    }
+
+
+}
