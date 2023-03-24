@@ -23,7 +23,7 @@ int main()
 
         //ps::update(window);
 
-        driving(player.angle, player.speed, player.rect);
+        driving(player);
         player.update(window);
 
         window.display();
