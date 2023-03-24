@@ -3,13 +3,15 @@
 #include <random>
 
 int menu(){
-
-    int menu;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+    sf::RectangleShape icon;
+    
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        menu = 1
-        
+        if(icon.getGlobalBounds().contains(sf::Mouse::getPosition().x,sf::Mouse::getPosition().y))
+        {
+
+            
+        }
     }
 
 
