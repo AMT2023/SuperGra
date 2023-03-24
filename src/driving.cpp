@@ -4,17 +4,17 @@
 
 void driving(Player &player)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) or sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         player.angle -= 1.1;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) or sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         player.angle += 1.1;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) or sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        player.speed += player.PRZYSPIESZENIE;
+        player.speed += player.przyspieszenie;
 
         // ps::particles.push_back(
         //     ps::Particle(
@@ -29,9 +29,9 @@ void driving(Player &player)
         //         0.4
         //     ));
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) or sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        player.speed -= player.PRZYSPIESZENIE / 2;
+        player.speed -= player.przyspieszenie / 2;
     }
 
     player.rect.setRotation(player.angle);
