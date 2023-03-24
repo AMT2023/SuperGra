@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
 project(PassarattiRacing LANGUAGES CXX)
-
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -14,5 +13,5 @@ if (WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(TARGET PassarattiRacing POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:PassarattiRacing> $<TARGET_FILE_DIR:PassarattiRacing> COMMAND_EXPAND_LISTS)
 endif()
-
+file(CREATE_LINK ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets SYMBOLIC)
 install(TARGETS PassarattiRacing)
