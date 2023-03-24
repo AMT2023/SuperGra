@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "driving.cpp"
 #include "save_init.cpp"
+#include "shop.cpp"
 
 int main()
 {
