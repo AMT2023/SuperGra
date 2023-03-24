@@ -1,5 +1,4 @@
 #ifndef _PLAYER_
-
 #define _PLAYER_
 #include<SFML/Graphics.hpp>
 class Player
