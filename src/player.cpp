@@ -1,7 +1,7 @@
 #ifndef _PLAYER_
 #define _PLAYER_
 
-#include<SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 class Player
 {
@@ -12,11 +12,7 @@ class Player
     float speed;
 
     float przyspieszenie = 0.15;
-    float przyspieszenieTurbo = 3;
-    float maxCzasTurbo = 1;
     float opor = 0.98;
-
-    float czasTurbo = maxCzasTurbo;
 
     Player(sf::Vector2f position)
     {
@@ -24,7 +20,7 @@ class Player
         rect.setSize({40, 60}); // rect.setSize({63, 128});
         rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
 
-        // tex.loadFromFile("passaratti-no-bg.png");
+        // tex.loadFromFile("passaratti.png");
         // rect.setTexture(&tex);
     }
 
