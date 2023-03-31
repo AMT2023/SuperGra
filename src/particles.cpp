@@ -1,3 +1,6 @@
+#ifndef _PARTICLES_
+#define _PARTICLES_
+
 #include <SFML/Graphics.hpp>
 
 namespace ps
@@ -147,3 +150,5 @@ namespace ps
         }
     }
 }
+
+#endif

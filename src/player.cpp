@@ -1,7 +1,8 @@
 #ifndef _PLAYER_
 #define _PLAYER_
 
-#include<SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Player
 {
@@ -17,11 +18,11 @@ class Player
     Player(sf::Vector2f position)
     {
         rect.setPosition(position);
-        rect.setSize({40, 60}); // rect.setSize({63, 128});
+        float texScale = 0.3;
+        tex.loadFromFile("assets/passaratti.png");
+        rect.setSize({texScale * (float)(tex.getSize().x), texScale * (float)(tex.getSize().y)});
         rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
-
-        // tex.loadFromFile("passaratti-no-bg.png");
-        // rect.setTexture(&tex);
+        rect.setTexture(&tex);
     }
 
     void move()
