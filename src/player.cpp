@@ -12,11 +12,7 @@ class Player
     float speed;
 
     float przyspieszenie = 0.15;
-    float przyspieszenieTurbo = 3;
-    float maxCzasTurbo = 1;
     float opor = 0.98;
-
-    float czasTurbo = maxCzasTurbo;
 
     Player(sf::Vector2f position)
     {

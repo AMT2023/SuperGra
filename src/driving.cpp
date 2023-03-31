@@ -35,40 +35,6 @@ void driving(Player &player)
         player.speed -= player.przyspieszenie / 2;
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-    {
-        if (player.czasTurbo >= 0 && player.czasTurbo <= player.maxCzasTurbo)
-        {
-            player.speed = 20 * player.przyspieszenie * player.przyspieszenieTurbo;
-            player.czasTurbo -= 0.01;
-
-            ps::particles.push_back(
-                ps::Particle(
-                    ps::Types::squareParticle,
-                    ps::Effects::fade,
-                    player.rect.getPosition(),
-                    40,
-                    {0, 0},
-                    player.angle,
-                    sf::Color(255, 255, 255, 30),
-                    1
-                ));
-        }
-        else
-        {
-            if (player.czasTurbo != player.maxCzasTurbo * 3)
-            {
-                player.czasTurbo = player.maxCzasTurbo * 3;
-            }
-            else
-            {
-                player.czasTurbo -= 0.01;
-            }
-        }
-    }
-
-    std::cout << player.czasTurbo << ", " << "\n";
-
     player.rect.setRotation(player.angle);
 }
 
