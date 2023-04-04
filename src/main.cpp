@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "levels.cpp"
 #include "driving.cpp"
 #include "save_init.cpp"
 #include "menu.cpp"
@@ -10,6 +11,8 @@ int main()
     window.setFramerateLimit(144);
 
     Player player({window.getSize().x / 2.f, window.getSize().y / 2.f});
+    Level level;
+    level.loadLevel(0, player);
 
     while (window.isOpen())
     {
@@ -27,6 +30,8 @@ int main()
 
         driving(player);
         player.update(window);
+
+        level.update(window);
 
         window.display();
     }

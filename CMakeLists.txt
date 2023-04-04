@@ -14,7 +14,7 @@ if (WIN32 AND BUILD_SHARED_LIBS)
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:PassarattiRacing> $<TARGET_FILE_DIR:PassarattiRacing> COMMAND_EXPAND_LISTS)
 endif()
 add_custom_target(copy_assets
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/data
 )
 add_dependencies(PassarattiRacing copy_assets)
 install(TARGETS PassarattiRacing)

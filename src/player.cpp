@@ -2,12 +2,12 @@
 #define _PLAYER_
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
+#include <cmath>
 
 class Player
 {
     public:
-    sf::RectangleShape rect;
+    sf::Sprite sprite;
     sf::Texture tex;
     float angle = 0;
     float speed;
@@ -17,18 +17,18 @@ class Player
 
     Player(sf::Vector2f position)
     {
-        rect.setPosition(position);
+        sprite.setPosition(position);
         float texScale = 0.3;
-        tex.loadFromFile("assets/passaratti.png");
-        rect.setSize({texScale * (float)(tex.getSize().x), texScale * (float)(tex.getSize().y)});
-        rect.setOrigin(rect.getSize().x / 2, rect.getSize().y / 2);
-        rect.setTexture(&tex);
+        tex.loadFromFile("data/assets/passaratti.png");
+        sprite.setTexture(tex);
+        sprite.setOrigin(tex.getSize().x / 2, tex.getSize().y / 2);
+        sprite.setScale(texScale, texScale);
     }
 
     void move()
     {
         speed *= opor;
-        rect.move({
+        sprite.move({
             speed * (float)(sin(M_PI / 180 * angle)),
             speed * (float)(-cos(M_PI / 180 * angle))
         });
@@ -37,10 +37,9 @@ class Player
     void update(sf::RenderWindow &window)
     {
         move();
-        // auto view = sf::View(rect.getPosition(), { 1920u, 1080u });
-        // view.setRotation(angle);
+        // auto view = sf::View(sprite.getPosition(), { 1920u, 1080u });
         // window.setView(view);
-        window.draw(rect);
+        window.draw(sprite);
     }
 };
 

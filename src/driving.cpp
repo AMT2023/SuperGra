@@ -21,7 +21,7 @@ void driving(Player &player)
             ps::Particle(
                 ps::Types::squareParticle,
                 ps::Effects::fade,
-                player.rect.getPosition(),
+                player.sprite.getPosition(),
                 10,
                 {0.5f * (float)(-sin(M_PI / 180 * ((rand() % 81) + player.angle - 40))),
                  0.5f * (float)(cos(M_PI / 180 * ((rand() % 81) + player.angle - 40)))},
@@ -35,6 +35,6 @@ void driving(Player &player)
         player.speed -= player.przyspieszenie / 2;
     }
 
-    player.rect.setRotation(player.angle);
+    player.sprite.setRotation(player.angle);
 }
 
