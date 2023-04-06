@@ -100,7 +100,7 @@ namespace ps
             }
         }
 
-        void updateParticle(sf::RenderWindow &window)
+        void updateParticle(sf::RenderWindow& window)
         {
             switch (type)
             {
@@ -128,7 +128,7 @@ namespace ps
             }
         }
 
-        void update(sf::RenderWindow &window)
+        void update(sf::RenderWindow& window)
         {
             updateEffects();
             updateParticle(window);
@@ -137,7 +137,7 @@ namespace ps
 
     std::vector<Particle> particles;
 
-    void update(sf::RenderWindow &window)
+    void update(sf::RenderWindow& window)
     {
         int i = 0;
         for (int i = 0; i < particles.size(); i++)

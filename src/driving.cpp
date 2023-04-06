@@ -3,7 +3,7 @@
 #include "particles.cpp"
 #include "player.cpp"
 
-void driving(Player &player)
+void driving(Player& player)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) or sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {

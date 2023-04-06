@@ -32,7 +32,7 @@ class Level
         {
             if (keyword == "wall") // [0] - posX, [1] - posY, [2] - width, [3] - height, [4] - rotation
             {
-                sf::RectangleShape object({values[2], values[3]});
+                sf::RectangleShape object({(float)(values[2]), (float)(values[3])});
                 object.setOrigin(values[2] / 2, values[3] / 2);
                 object.setPosition(values[0], values[1]);
                 object.setRotation(180 / M_PI * values[4]);

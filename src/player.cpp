@@ -9,6 +9,7 @@ class Player
     public:
     sf::Sprite sprite;
     sf::Texture tex;
+    sf::Vector2f spawnpoint;
     float angle = 0;
     float speed;
 
@@ -17,12 +18,20 @@ class Player
 
     Player(sf::Vector2f position)
     {
-        sprite.setPosition(position);
+        spawnpoint = position;
         float texScale = 0.3;
         tex.loadFromFile("data/assets/passaratti.png");
         sprite.setTexture(tex);
         sprite.setOrigin(tex.getSize().x / 2, tex.getSize().y / 2);
+        sprite.setPosition(spawnpoint);
         sprite.setScale(texScale, texScale);
+    }
+
+    void reset()
+    {
+        sprite.setPosition(spawnpoint);
+        angle = 0;
+        speed = 0;
     }
 
     void move()
@@ -34,7 +43,7 @@ class Player
         });
     }
 
-    void update(sf::RenderWindow &window)
+    void update(sf::RenderWindow& window)
     {
         move();
         // auto view = sf::View(sprite.getPosition(), { 1920u, 1080u });
