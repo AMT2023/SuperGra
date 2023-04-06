@@ -7,7 +7,12 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Racing", sf::Style::Titlebar | sf::Style::Close };
+    sf::VideoMode windowVideoMode(1920u, 1080u);
+    sf::String windowTitle("Passaratti Racing");
+    sf::Uint32 windowStyle(sf::Style::Titlebar | sf::Style::Close);
+    sf::Uint32 windowStyleFullscreen(sf::Style::Fullscreen);
+    bool windowIsFullscreen = 0;
+    sf::RenderWindow window{ windowVideoMode, windowTitle, windowStyle };
     window.setFramerateLimit(144);
 
     sf::Clock elapsedTime;
@@ -29,6 +34,15 @@ int main()
             if ((event.type == sf::Event::Closed) or (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
             {
                 window.close();
+            }
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F11)
+            {
+                if (windowIsFullscreen)
+                { window.create( windowVideoMode, windowTitle, windowStyle ); }
+                else
+                { window.create( windowVideoMode, windowTitle, windowStyleFullscreen ); }
+                windowIsFullscreen = !windowIsFullscreen;
             }
         }
 
