@@ -7,7 +7,7 @@
 
 int main()
 {
-    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Racing", sf::Style::None };
+    auto window = sf::RenderWindow{ { 1920u, 1080u }, "Passaratti Racing", sf::Style::Titlebar | sf::Style::Close };
     window.setFramerateLimit(144);
 
     sf::Clock elapsedTime;
