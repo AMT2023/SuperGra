@@ -3,6 +3,7 @@
 #include "driving.cpp"
 #include "save_init.cpp"
 #include "menu.cpp"
+#include "utility.cpp"
 
 
 int main()
@@ -11,9 +12,10 @@ int main()
     sf::String windowTitle("Passaratti Racing");
     sf::Uint32 windowStyle(sf::Style::Titlebar | sf::Style::Close);
     sf::Uint32 windowStyleFullscreen(sf::Style::Fullscreen);
+    sf::Uint32 windowFramerateLimit(144);
     bool windowIsFullscreen = 0;
     sf::RenderWindow window{ windowVideoMode, windowTitle, windowStyle };
-    window.setFramerateLimit(144);
+    window.setFramerateLimit(windowFramerateLimit);
 
     sf::Clock elapsedTime;
 
@@ -31,9 +33,14 @@ int main()
         // if (!window.hasFocus()) { continue; }
         for (auto event = sf::Event{}; window.pollEvent(event);)
         {
-            if ((event.type == sf::Event::Closed) or (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
+            if (event.type == sf::Event::Closed)
             {
                 window.close();
+            }
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+            {
+                gameState = 0;
             }
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F11)
@@ -42,6 +49,7 @@ int main()
                 { window.create( windowVideoMode, windowTitle, windowStyle ); }
                 else
                 { window.create( windowVideoMode, windowTitle, windowStyleFullscreen ); }
+                window.setFramerateLimit(windowFramerateLimit);
                 windowIsFullscreen = !windowIsFullscreen;
             }
         }
@@ -63,6 +71,7 @@ int main()
             level.update(window);
         }
 
+        if (pixelPerfectTest(player.sprite, level.objects[0].sprite, sf::Uint8(0))) { printf("yes"); } else { printf("no"); }
         window.display();
     }
 }

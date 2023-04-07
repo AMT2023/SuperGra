@@ -2,17 +2,23 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <iostream>
 #include "player.cpp"
+#include "utility.cpp"
+
+struct Object
+{
+    sf::Texture tex;
+    sf::Sprite sprite;
+};
 
 class Level
 {
+    private:
     sf::Texture background_tex;
     sf::Sprite background;
 
-    std::vector<sf::RectangleShape> objects;
-
     public:
+    std::vector<Object> objects;
 
     void loadLevel(int nLevel, Player& player)
     {
@@ -25,17 +31,20 @@ class Level
 
         std::string keyword;
         int values[5];
+        std::string texturePath;
 
-        sf::RectangleShape object;
-
-        while (levelFile >> keyword >> values[0] >> values[1] >> values[2] >> values[3] >> values[4])
+        while (levelFile >> keyword >> values[0] >> values[1] >> values[2] >> values[3] >> values[4] >> texturePath)
         {
-            if (keyword == "wall") // [0] - posX, [1] - posY, [2] - width, [3] - height, [4] - rotation
+            if (keyword == "wall") // [0] - posX, [1] - posY, [2] - width, [3] - height, [4] - rotation, [5] - texturePath
             {
-                sf::RectangleShape object({(float)(values[2]), (float)(values[3])});
-                object.setOrigin(values[2] / 2, values[3] / 2);
-                object.setPosition(values[0], values[1]);
-                object.setRotation(180 / M_PI * values[4]);
+                Object object;
+                object.tex.loadFromFile(texturePath);
+                object.tex.setRepeated(true);
+                object.sprite.setTexture(object.tex);
+                // object.sprite.setSize({(float)(values[2]), (float)(values[3])});
+                object.sprite.setOrigin(values[2] / 2, values[3] / 2);
+                object.sprite.setPosition(values[0], values[1]);
+                object.sprite.setRotation(radians(values[4]));
                 objects.push_back(object);
             }
         }
@@ -43,11 +52,12 @@ class Level
         levelFile.close();
     }
 
-    void update(sf::RenderWindow &window)
+    void update(sf::RenderWindow& window)
     {
         for (auto &object : objects)
         {
-            window.draw(object);
+            object.sprite.setTexture(object.tex);
+            window.draw(object.sprite);
         }
     }
 };

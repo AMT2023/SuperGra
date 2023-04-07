@@ -2,7 +2,7 @@
 #define _PLAYER_
 
 #include <SFML/Graphics.hpp>
-#include <cmath>
+#include "utility.cpp"
 
 class Player
 {
@@ -38,8 +38,8 @@ class Player
     {
         speed *= opor;
         sprite.move({
-            speed * (float)(sin(M_PI / 180 * angle)),
-            speed * (float)(-cos(M_PI / 180 * angle))
+            speed * (float)(sin(radians(angle))),
+            speed * (float)(-cos(radians(angle)))
         });
     }
 
