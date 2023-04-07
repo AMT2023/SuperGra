@@ -10,6 +10,7 @@ class Player
     sf::Sprite sprite;
     sf::Texture tex;
     sf::Vector2f spawnpoint;
+    int currentCheckpoint = 0;
     float angle = 0;
     float speed;
 
