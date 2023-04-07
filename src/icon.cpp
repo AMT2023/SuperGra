@@ -7,17 +7,17 @@
 
 class Icon
 {
-    private:
-    sf::Texture tex;
-    
-
     public:
+    sf::Texture tex;
     sf::Sprite sprite;
     sf::Vector2f position;
     sf::Vector2f offset;
+    std::string texturePath;
+    
 
     Icon(std::string texturePath, sf::Vector2f position)
     {
+        this->texturePath = texturePath;
         this->position = position;
         sprite.setPosition(position);
         tex.loadFromFile(texturePath);
@@ -39,10 +39,18 @@ class Icon
 
     void update(sf::RenderWindow& window)
     {
-        sprite.setTexture(tex);
         sprite.setPosition({position.x + offset.x, position.y + offset.y});
         window.draw(sprite);
     }
 };
+
+void fixTextures(std::vector<Icon>& icons)
+{
+    for (auto& icon : icons)
+    {
+        icon.tex.loadFromFile(icon.texturePath);
+        icon.sprite.setTexture(icon.tex);
+    }
+}
 
 #endif

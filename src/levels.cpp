@@ -1,12 +1,17 @@
+#ifndef _LEVELS_
+#define _LEVELS_
+
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <vector>
 #include <string>
+#include <iostream>
 #include "player.cpp"
 #include "utility.cpp"
 
 struct Object
 {
+    std::string texturePath;
     sf::Texture tex;
     sf::Sprite sprite;
 };
@@ -14,50 +19,49 @@ struct Object
 class Level
 {
     private:
-    sf::Texture background_tex;
-    sf::Sprite background;
+    sf::Texture bgTex;
+    sf::Sprite bgSprite;
+
+    sf::Texture fgTex;
+    sf::Sprite fgSprite;
 
     public:
     std::vector<Object> objects;
 
+    sf::Vector2f playerSpawnpoint;
+    float playerAngle;
+
     void loadLevel(int nLevel, Player& player)
     {
-        std::fstream levelFile("data/levels/level" + std::to_string(nLevel));
+        std::fstream levelInfoFile("data/levels/level" + std::to_string(nLevel) + "/levelInfo");
 
-        sf::Vector2f playerPos;
-        levelFile >> playerPos.x >> playerPos.y;
+        levelInfoFile >> playerSpawnpoint.x >> playerSpawnpoint.y >> playerAngle;
 
-        player.sprite.setPosition(playerPos);
+        std::string bgTexPath;
+        levelInfoFile >> bgTexPath;
+        bgTexPath = ("data/levels/level" + std::to_string(nLevel) + "/" + bgTexPath);
+        bgTex.loadFromFile(bgTexPath);
+        bgSprite.setTexture(bgTex);
 
-        std::string keyword;
-        int values[5];
-        std::string texturePath;
+        std::string fgTexPath;
+        levelInfoFile >> fgTexPath;
+        fgTexPath = ("data/levels/level" + std::to_string(nLevel) + "/" + fgTexPath);
+        fgTex.loadFromFile(fgTexPath);
+        fgSprite.setTexture(fgTex);
 
-        while (levelFile >> keyword >> values[0] >> values[1] >> values[2] >> values[3] >> values[4] >> texturePath)
-        {
-            if (keyword == "wall") // [0] - posX, [1] - posY, [2] - width, [3] - height, [4] - rotation, [5] - texturePath
-            {
-                Object object;
-                object.tex.loadFromFile(texturePath);
-                object.tex.setRepeated(true);
-                object.sprite.setTexture(object.tex);
-                // object.sprite.setSize({(float)(values[2]), (float)(values[3])});
-                object.sprite.setOrigin(values[2] / 2, values[3] / 2);
-                object.sprite.setPosition(values[0], values[1]);
-                object.sprite.setRotation(radians(values[4]));
-                objects.push_back(object);
-            }
-        }
-        
-        levelFile.close();
+        levelInfoFile.close();
     }
 
-    void update(sf::RenderWindow& window)
+    void update(sf::RenderWindow& window, Player& player)
     {
-        for (auto &object : objects)
+        if (Collision::pixelPerfectTest(player.sprite, fgSprite))
         {
-            object.sprite.setTexture(object.tex);
-            window.draw(object.sprite);
+            player.reset(playerSpawnpoint, playerAngle);
         }
+
+        window.draw(bgSprite);
+        window.draw(fgSprite);
     }
 };
+
+#endif

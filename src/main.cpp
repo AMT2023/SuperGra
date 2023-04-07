@@ -19,7 +19,7 @@ int main()
 
     sf::Clock elapsedTime;
 
-    Player player({window.getSize().x / 2.f, window.getSize().y / 2.f});
+    Player player;
 
     Level level;
     level.loadLevel(0, player);
@@ -60,18 +60,17 @@ int main()
 
         if (gameState == 0)
         {
-            menu.update(window, gameState, player, elapsedTime);
+            menu.update(window, gameState, player, level, elapsedTime);
         }
 
         if (gameState == 1)
         {
+            level.update(window, player);
+
             driving(player);
             player.update(window);
-
-            level.update(window);
         }
 
-        if (pixelPerfectTest(player.sprite, level.objects[0].sprite, sf::Uint8(0))) { printf("yes"); } else { printf("no"); }
         window.display();
     }
 }
