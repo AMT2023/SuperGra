@@ -13,16 +13,17 @@ class Icon
     sf::Vector2f position;
     sf::Vector2f offset;
     std::string texturePath;
-    
 
-    Icon(std::string texturePath, sf::Vector2f position)
+    Icon(std::string texturePath, sf::Vector2f position, sf::Vector2f scale = sf::Vector2f(1, 1))
     {
         this->texturePath = texturePath;
         this->position = position;
-        sprite.setPosition(position);
         tex.loadFromFile(texturePath);
+        tex.setSmooth(true);
         sprite.setTexture(tex);
         sprite.setOrigin(sprite.getGlobalBounds().getSize().x / 2, sprite.getGlobalBounds().getSize().y / 2);
+        sprite.setPosition(position);
+        sprite.setScale(scale);
     }
 
     bool isClicked(sf::RenderWindow& window)
@@ -44,7 +45,7 @@ class Icon
     }
 };
 
-void fixTextures(std::vector<Icon>& icons)
+void fixTextures(std::vector<Icon>& icons) // The pointers to textures got fucked up for some reason
 {
     for (auto& icon : icons)
     {

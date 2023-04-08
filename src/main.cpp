@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "levels.cpp"
 #include "driving.cpp"
-#include "save_init.cpp"
 #include "menu.cpp"
 #include "utility.cpp"
 
@@ -22,11 +21,10 @@ int main()
     Player player;
 
     Level level;
-    level.loadLevel(0, player);
 
     Menu menu;
 
-    int gameState = 0; // 0 - menu, 1 - playing
+    int gameState = 0; // 0 - menu, 1 - playing, 2 - win
 
     while (window.isOpen())
     {
@@ -52,6 +50,11 @@ int main()
                 window.setFramerateLimit(windowFramerateLimit);
                 windowIsFullscreen = !windowIsFullscreen;
             }
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R)
+            {
+                level.reset(player);
+            }
         }
 
         window.clear();
@@ -65,7 +68,7 @@ int main()
 
         if (gameState == 1)
         {
-            level.update(window, player);
+            level.update(window, player, gameState);
 
             driving(player);
             player.update(window);

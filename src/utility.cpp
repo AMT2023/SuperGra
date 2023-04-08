@@ -9,7 +9,8 @@ float radians(double __X)
     return M_PI / 180 * __X;
 }
 
-namespace Collision
+
+namespace collision
 {
 using TextureMask = std::vector<sf::Uint8>;
 
@@ -105,5 +106,6 @@ bool singlePixelTest(const sf::Sprite& sprite, sf::Vector2f& mousePosition, sf::
     return false;
 }
 };
+
 
 #endif
