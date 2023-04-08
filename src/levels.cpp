@@ -10,7 +10,7 @@
 
 struct Checkpoint
 {
-    bool t = false;
+    bool t;
     sf::Vector2f a;
     sf::Vector2f b;
 };
@@ -61,6 +61,7 @@ class Level
         while (levelInfoFile >> checkpointA.x >> checkpointA.y >> checkpointB.x >> checkpointB.y)
         {
             Checkpoint checkpoint;
+            checkpoint.t = false;
             checkpoint.a = {checkpointA.x, checkpointA.y};
             checkpoint.b = {checkpointB.x, checkpointB.y};
             checkpoints.push_back(checkpoint);
@@ -78,9 +79,10 @@ class Level
     {
         // Update checkpointsTouched
         for (auto& checkpoint : checkpoints)
-        { 
-            for (float i = checkpoint.a.x; i <= checkpoint.b.x; i += std::min(player.sprite.getTexture()->getSize().x, player.sprite.getTexture()->getSize().y) / 2) {
-            for (float j = checkpoint.a.y; j <= checkpoint.b.y; j += std::min(player.sprite.getTexture()->getSize().x, player.sprite.getTexture()->getSize().y) / 2) {
+        {
+            // std::min(player.sprite.getTexture()->getSize().x, player.sprite.getTexture()->getSize().y) / 2
+            for (float i = checkpoint.a.x; i <= checkpoint.b.x; i += 1) {
+            for (float j = checkpoint.a.y; j <= checkpoint.b.y; j += 1) {
 
                 sf::Vector2f pixel(i, j);
                 if (collision::singlePixelTest(player.sprite, pixel) && !checkpoint.t) {
