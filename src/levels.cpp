@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <iostream>
 #include "player.cpp"
 #include "utility.cpp"
 
@@ -42,28 +43,30 @@ class Level
         levelInfoFile >> playerSpawnpoint.x >> playerSpawnpoint.y >> playerAngle;
         player.reset(playerSpawnpoint, playerAngle);
 
+        std::cout << curLevel;
+
         std::string bgTexPath;
         levelInfoFile >> bgTexPath;
         bgTexPath = ("data/levels/level" + std::to_string(curLevel) + "/" + bgTexPath);
         bgTex.loadFromFile(bgTexPath);
-        bgSprite.setTexture(bgTex);
+        bgSprite.setTexture(bgTex, true);
 
         std::string fgTexPath;
         levelInfoFile >> fgTexPath;
         fgTexPath = ("data/levels/level" + std::to_string(curLevel) + "/" + fgTexPath);
         fgTex.loadFromFile(fgTexPath);
-        fgSprite.setTexture(fgTex);
+        fgSprite.setTexture(fgTex, true);
 
         checkpoints.clear();
         checkpointsTouched = 0;
-        sf::Vector2f checkpointA;
-        sf::Vector2f checkpointB;
-        while (levelInfoFile >> checkpointA.x >> checkpointA.y >> checkpointB.x >> checkpointB.y)
+        sf::Vector2f pointA;
+        sf::Vector2f pointB;
+        while (levelInfoFile >> pointA.x >> pointA.y >> pointB.x >> pointB.y)
         {
             Checkpoint checkpoint;
             checkpoint.t = false;
-            checkpoint.a = {checkpointA.x, checkpointA.y};
-            checkpoint.b = {checkpointB.x, checkpointB.y};
+            checkpoint.a = {pointA.x, pointA.y};
+            checkpoint.b = {pointB.x, pointB.y};
             checkpoints.push_back(checkpoint);
         }
 
@@ -72,7 +75,13 @@ class Level
 
     void reset(Player& player)
     {
-        loadLevel(curLevel, player);
+        player.reset(playerSpawnpoint, playerAngle);
+
+        checkpointsTouched = 0;
+        for (auto& checkpoint : checkpoints)
+        {
+            checkpoint.t = false;
+        }
     }
 
     void updateCheckpoints(Player& player, int& gameState)
@@ -98,13 +107,13 @@ class Level
 
         // Got all checkpoints
         if (checkpointsTouched == checkpoints.size()) {
-        for (float i = checkpoints[0].a.x; i <= checkpoints[0].b.x; i += std::min(player.sprite.getTexture()->getSize().x, player.sprite.getTexture()->getSize().y) / 2) {
-        for (float j = checkpoints[0].a.y; j <= checkpoints[0].b.y; j += std::min(player.sprite.getTexture()->getSize().x, player.sprite.getTexture()->getSize().y) / 2) {
+        for (float i = checkpoints[0].a.x; i <= checkpoints[0].b.x; i += 1) {
+        for (float j = checkpoints[0].a.y; j <= checkpoints[0].b.y; j += 1) {
 
             sf::Vector2f pixel(i, j);
             if (collision::singlePixelTest(player.sprite, pixel))
             {
-                gameState = 0;
+                loadLevel(curLevel + 1, player);
             }
 
         }
@@ -114,12 +123,12 @@ class Level
 
     void update(sf::RenderWindow& window, Player& player, int& gameState)
     {
-        updateCheckpoints(player, gameState);
-
         if (collision::pixelPerfectTest(player.sprite, fgSprite))
         {
             reset(player);
         }
+
+        updateCheckpoints(player, gameState);
 
         window.draw(bgSprite);
         window.draw(fgSprite);

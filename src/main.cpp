@@ -24,7 +24,7 @@ int main()
 
     Menu menu;
 
-    int gameState = 0; // 0 - menu, 1 - playing, 2 - win
+    int gameState = 0; // 0 - menu, 1 - playing
 
     while (window.isOpen())
     {
@@ -61,17 +61,18 @@ int main()
 
         ps::update(window);
 
-        if (gameState == 0)
+        switch (gameState)
         {
-            menu.update(window, gameState, player, level, elapsedTime);
-        }
+            case 0:
+                menu.update(window, gameState, player, level, elapsedTime);
+            break;
+            
+            case 1:
+                level.update(window, player, gameState);
 
-        if (gameState == 1)
-        {
-            level.update(window, player, gameState);
-
-            driving(player);
-            player.update(window);
+                driving(player);
+                player.update(window);
+            break;
         }
 
         window.display();

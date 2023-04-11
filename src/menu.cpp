@@ -15,7 +15,7 @@ class Menu
     std::vector<Icon> icons1;
     std::vector<Icon> icons2;
 
-    int menuState = 0; // 0 - main menu, 1 - shop, 2 - level won
+    int menuState = 0; // 0 - main menu, 1 - shop, 2 - level beaten
 
     Menu()
     {
@@ -23,17 +23,38 @@ class Menu
         icons0.push_back( Icon("data/menu/icons/logo.png", {960, 240}, {0.5, 0.5}) );
         icons0.push_back( Icon("data/menu/icons/start.png", {960, 540}) );
         fixTextures(icons0);
+
+        icons2.push_back( Icon("data/menu/bg/menu.png", {960, 540}) );
+        icons2.push_back( Icon("data/menu/icons/logo.png", {960, 240}, {0.5, 0.5}) );
+        icons2.push_back( Icon("data/menu/icons/start.png", {960, 540}) );
+        fixTextures(icons2);
     }
 
     void update(sf::RenderWindow& window, int& gameState, Player& player, Level& level, sf::Clock elapsedTime)
     {
-        icons0[1].offset.y = sin(elapsedTime.getElapsedTime().asSeconds() * 3) * 40;
-
-        if (icons0[2].isClicked(window))
+        switch (menuState)
         {
-            gameState = 1;
-            level.loadLevel(0, player);
+            case 0:
+                icons0[1].offset.y = sin(elapsedTime.getElapsedTime().asSeconds() * 3) * 40;
+
+                if (icons0[2].isClicked(window))
+                {
+                    gameState = 1;
+                    level.loadLevel(0, player);
+                }
+                break;
+
+            case 1:
+                icons0[1].offset.y = sin(elapsedTime.getElapsedTime().asSeconds() * 3) * 40;
+
+                if (icons0[2].isClicked(window))
+                {
+                    gameState = 1;
+                    level.loadLevel(0, player);
+                }
+                break;
         }
+        
 
         for (auto &icon : icons0)
         {
