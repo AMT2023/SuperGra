@@ -111,11 +111,9 @@ class Level
             {
                 loadLevel(curLevel + 1, player);
                 std::cerr << checkpoints.size() << ' ' << checkpointsTouched << ' ' << curLevel << '\n';
+                return;
             }
-
-        }
-        }
-        }
+        }}}
     }
 
     void update(sf::RenderWindow& window, Player& player, int& gameState)
