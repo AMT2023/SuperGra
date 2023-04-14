@@ -28,7 +28,7 @@ int main()
 
     while (window.isOpen())
     {
-        // if (!window.hasFocus()) { continue; }
+        if (!window.hasFocus()) { continue; }
         for (auto event = sf::Event{}; window.pollEvent(event);)
         {
             if (event.type == sf::Event::Closed)
@@ -59,16 +59,16 @@ int main()
 
         window.clear();
 
-        ps::update(window);
-
         switch (gameState)
         {
             case 0:
                 menu.update(window, gameState, player, level, elapsedTime);
             break;
-            
+
             case 1:
                 level.update(window, player, gameState);
+
+                ps::update(window);
 
                 driving(player, level);
                 player.update(window);
