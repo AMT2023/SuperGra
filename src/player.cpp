@@ -46,7 +46,6 @@ class Player
 
     void update(sf::RenderWindow& window)
     {
-        move();
         auto view = sf::View(sprite.getPosition(), { 1920u, 1080u });
         window.setView(view);
         window.draw(sprite);

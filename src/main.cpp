@@ -70,7 +70,7 @@ int main()
             case 1:
                 level.update(window, player, gameState);
 
-                driving(player);
+                driving(player, level);
                 player.update(window);
             break;
         }

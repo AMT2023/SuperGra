@@ -18,14 +18,13 @@ struct Checkpoint
 
 class Level
 {
-    private:
+    public:
     sf::Texture bgTex;
     sf::Sprite bgSprite;
 
     sf::Texture fgTex;
     sf::Sprite fgSprite;
 
-    public:
     int curLevel = 0;
 
     std::vector<Checkpoint> checkpoints;
@@ -87,7 +86,6 @@ class Level
         // Update checkpointsTouched
         for (auto& checkpoint : checkpoints)
         {
-            // std::min(player.sprite.getTexture()->getSize().x, player.sprite.getTexture()->getSize().y) / 2
             for (float i = checkpoint.a.x; i <= checkpoint.b.x; i += 1) {
             for (float j = checkpoint.a.y; j <= checkpoint.b.y; j += 1) {
 
@@ -122,11 +120,6 @@ class Level
 
     void update(sf::RenderWindow& window, Player& player, int& gameState)
     {
-        if (collision::pixelPerfectTest(player.sprite, fgSprite))
-        {
-            reset(player);
-        }
-
         updateCheckpoints(player, gameState);
 
         window.draw(bgSprite);

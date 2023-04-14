@@ -2,8 +2,11 @@
 #include "player.cpp"
 #include "utility.cpp"
 
-void driving(Player& player)
+void driving(Player& player, Level& level)
 {
+    float prevAngle = player.angle;
+    sf::Vector2f prevPos = player.sprite.getPosition();
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) or sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         player.angle -= 1.1;
@@ -12,6 +15,13 @@ void driving(Player& player)
     {
         player.angle += 1.1;
     }
+    player.sprite.setRotation(player.angle);
+
+    if (collision::pixelPerfectTest(level.fgSprite, player.sprite))
+    {
+        player.sprite.setRotation(prevAngle);
+    }
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) or sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         player.speed += player.przyspieszenie;
@@ -33,6 +43,11 @@ void driving(Player& player)
     {
         player.speed -= player.przyspieszenie / 2;
     }
+    player.move();
 
-    player.sprite.setRotation(player.angle);
+    if (collision::pixelPerfectTest(level.fgSprite, player.sprite))
+    {
+        player.speed = 0;
+        player.sprite.setPosition(prevPos);
+    }
 }
