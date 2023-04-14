@@ -2,6 +2,7 @@
 #define _PLAYER_
 
 #include <SFML/Graphics.hpp>
+#include "levels.cpp"
 #include "utility.cpp"
 
 class Player

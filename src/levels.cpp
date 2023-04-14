@@ -43,8 +43,6 @@ class Level
         levelInfoFile >> playerSpawnpoint.x >> playerSpawnpoint.y >> playerAngle;
         player.reset(playerSpawnpoint, playerAngle);
 
-        std::cout << curLevel;
-
         std::string bgTexPath;
         levelInfoFile >> bgTexPath;
         bgTexPath = ("data/levels/level" + std::to_string(curLevel) + "/" + bgTexPath);
@@ -104,7 +102,7 @@ class Level
             }
             }
         }
-
+        std::cerr << checkpoints.size() << ' ' << checkpointsTouched << '\n';
         // Got all checkpoints
         if (checkpointsTouched == checkpoints.size()) {
         for (float i = checkpoints[0].a.x; i <= checkpoints[0].b.x; i += 1) {
@@ -114,6 +112,7 @@ class Level
             if (collision::singlePixelTest(player.sprite, pixel))
             {
                 loadLevel(curLevel + 1, player);
+                std::cerr << checkpoints.size() << ' ' << checkpointsTouched << ' ' << curLevel << '\n';
             }
 
         }
