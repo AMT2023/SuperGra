@@ -11,7 +11,7 @@ class Menu
     std::vector<std::vector<Icon>> iconSets;
 
     int menuState = 0; // 0 - main menu, 1 - shop, 2 - level beaten
-
+    
     Menu()
     {
         iconSets.resize(3);
@@ -28,6 +28,8 @@ class Menu
 
     void update(sf::RenderWindow& window, int& gameState, Player& player, Level& level, sf::Clock elapsedTime)
     {
+        auto view = sf::View({1920/2,1080/2}, { 1920u, 1080u });
+        window.setView(view);
         switch (menuState)
         {
             case 0:
