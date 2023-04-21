@@ -63,6 +63,7 @@ int main()
         {
             case 0:
                 menu.update(window, gameState, player, level, elapsedTime);
+
             break;
 
             case 1:
